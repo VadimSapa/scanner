@@ -1,12 +1,11 @@
 <?php
-namespace Scanner\Storage\Entity;
+namespace SapaVadim;
 
 interface ProductInterface
 {
     const DATA_CODE = 'code';
     const DATA_PRICE = 'price';
     const DATA_RULE = 'rule';
-    const DATA_AMOUNT = 'amount';
 
     /**
      * @param string $code
@@ -37,7 +36,7 @@ interface ProductInterface
     public function setRule($rule);
 
     /**
-     * @return mixed
+     * @return mixed|null
      */
     public function getRule();
 }

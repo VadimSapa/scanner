@@ -1,6 +1,6 @@
 <?php
 
-namespace Scanner\Storage\Entity;
+namespace SapaVadim;
 
 class Product implements ProductInterface
 {
@@ -66,23 +66,26 @@ class Product implements ProductInterface
      */
     public function getRule()
     {
-        return $this->data[ProductInterface::DATA_RULE];
+        return $this->data[ProductInterface::DATA_RULE] ?? null;
     }
 
     /**
-     * @inheritdoc
+     * @return bool
+     * @throws VadimSapaScannerException
      */
-    public function getAmount()
+    public function validate()
     {
-        return $this->data[ProductInterface::DATA_AMOUNT];
-    }
+        if (!$this->getCode()) {
+            throw new VadimSapaScannerException("Code is required for product");
+        }
 
-    /**
-     * @inheritdoc
-     */
-    public function setAmount($amount)
-    {
-        $this->data[ProductInterface::DATA_AMOUNT] = $amount;
-        return $this;
+        if (!$this->getPrice()) {
+            throw new VadimSapaScannerException("Price is required for product");
+        }
+
+        if ($this->getRule() && !is_array($this->getRule())) {
+            throw new VadimSapaScannerException("Rule must be array");
+        }
+        return true;
     }
 }
